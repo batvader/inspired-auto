@@ -72,6 +72,7 @@ form.addEventListener('submit',e=>{
     .then(r=>{if(!r.ok)throw 0;location.href='thanks.html'})
     .catch(()=>{er.hidden=false;b.disabled=false;b.textContent='Send request'});
 });
+['input','change'].forEach(ev=>form.addEventListener(ev,e=>{if(e.target.checkValidity())clearErr(e.target)}));
 </script>
 </div></main>
 <footer><div class="wrap">Inspired Auto · Zeeland, Michigan · <a href="tel:+16168486303">(616) 848-6303</a> · <a href="mailto:raiders7126@gmail.com">Email</a></div></footer>
