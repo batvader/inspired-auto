@@ -23,12 +23,6 @@
 <label>Make<select id="make" name="make" required disabled><option value="">Select make</option></select></label>
 <label>Model<select id="model" name="model" required disabled><option value="">Select model</option></select></label>
 </div>
-<div class="row2">
-<label>Engine<select id="engine" name="engine" required disabled><option value="">Select engine</option><option>4-cylinder</option><option>6-cylinder (V6 or inline-6)</option><option>8-cylinder (V8)</option><option>Diesel</option><option>Hybrid or electric</option><option>Not sure</option></select></label>
-<label>Engine size or details (optional)<input name="engine_details" id="details" placeholder="e.g. 5.0L, 3.5L EcoBoost, 6.7L Cummins"></label>
-</div>
-<label>VIN (optional, gives the most accurate details)<input name="vin" id="vin" maxlength="17" autocapitalize="characters" autocomplete="off"></label>
-<p class="note" id="vininfo" aria-live="polite"></p>
 <label id="other-wrap" hidden>Not listed? Tell us the vehicle<input id="other" name="vehicle_other"></label>
 <label>Service needed<select name="service"><option>Oil change</option><option>Brakes</option><option>Diagnostics</option><option>Suspension</option><option>Electrical</option><option>Inspection</option><option>Other</option></select></label>
 <label>Preferred date<input name="date" type="date"></label>
@@ -36,19 +30,18 @@
 <button class="btn" type="submit">Send request</button>
 <p class="note">Requests are not confirmed until you hear back.</p></form>
 <script>
-const $=id=>document.getElementById(id),y=$('year'),m=$('make'),mo=$('model'),ow=$('other-wrap'),ot=$('other'),eng=$('engine'),det=$('details');
+const $=id=>document.getElementById(id),y=$('year'),m=$('make'),mo=$('model'),ow=$('other-wrap'),ot=$('other');
 const makes=['Acura','Audi','BMW','Buick','Cadillac','Chevrolet','Chrysler','Dodge','Ford','GMC','Honda','Hyundai','Infiniti','Jeep','Kia','Lexus','Lincoln','Mazda','Mercedes-Benz','Mini','Mitsubishi','Nissan','Pontiac','Ram','Subaru','Toyota','Volkswagen','Volvo'];
 const add=(s,v,t)=>s.add(new Option(t||v,v));
 for(let i=new Date().getFullYear()+1;i>=1960;i--)add(y,i);
 makes.concat('Other').forEach(v=>add(m,v));
 function manual(){ow.hidden=false;ot.required=true}
 function auto(){ow.hidden=true;ot.required=false;ot.value=''}
-function sync(){eng.disabled=!mo.value}
-function resetModel(){mo.length=1;mo.disabled=true;eng.value='';eng.disabled=true;auto()}
+function resetModel(){mo.length=1;mo.disabled=true;auto()}
 y.onchange=()=>{m.disabled=!y.value;m.value='';resetModel()};
 m.onchange=async()=>{
   resetModel();if(!m.value||!y.value)return;
-  if(m.value==='Other'){add(mo,'Other','Not listed');mo.value='Other';mo.disabled=false;manual();sync();return}
+  if(m.value==='Other'){add(mo,'Other','Not listed');mo.value='Other';mo.disabled=false;manual();return}
   mo.options[0].text='Loading…';
   try{
     const r=await fetch('https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/'+encodeURIComponent(m.value)+'/modelyear/'+y.value+'?format=json');
@@ -56,19 +49,10 @@ m.onchange=async()=>{
     if(!names.length)throw 0;
     names.forEach(n=>add(mo,n));add(mo,'Other','Other / not listed');
   }catch(e){add(mo,'Other','Not listed');mo.value='Other';manual()}
-  mo.options[0].text='Select model';mo.disabled=false;sync();
+  mo.options[0].text='Select model';mo.disabled=false;
 };
-mo.onchange=()=>{mo.value==='Other'?manual():auto();sync()};
-$('vin').onchange=async()=>{
-  const v=$('vin').value.trim(),n=$('vininfo');n.textContent='';if(v.length!==17)return;
-  try{
-    const d=(await (await fetch('https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValues/'+encodeURIComponent(v)+'?format=json')).json()).Results[0];
-    const e=[d.DisplacementL&&(+d.DisplacementL).toFixed(1)+'L',d.EngineCylinders&&d.EngineCylinders+'-cyl',d.FuelTypePrimary].filter(Boolean).join(' ');
-    n.textContent='VIN found: '+[d.ModelYear,d.Make,d.Model,e].filter(Boolean).join(' ');
-    if(e&&!det.value)det.value=e;
-  }catch(x){}
-};
+mo.onchange=()=>mo.value==='Other'?manual():auto();
 </script>
 </div></main>
-<footer><div class="wrap">Inspired Auto · Zeeland, Michigan · <a href="tel:+1616848-6303">(616) 848-6303</a> · <a href="raiders7126@gmail.com">Email</a></div></footer>
+<footer><div class="wrap">Inspired Auto · Zeeland, Michigan · <a href="tel:+16168486303">(616) 848-6303</a> · <a href="mailto:raiders7126@gmail.com">Email</a></div></footer>
 </body></html>
