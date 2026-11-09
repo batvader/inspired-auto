@@ -15,14 +15,33 @@
 <main><div class="wrap">
 <h1>Book a visit</h1><p class="lede">Send a request and I’ll confirm a time by phone or email.</p>
 <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-<label>Name(First and Last)<input name="name" required autocomplete="name"></label>
+<label>Name<input name="name" required autocomplete="name"></label>
 <label>Phone<input name="phone" type="tel" required autocomplete="tel"></label>
 <label>Email<input name="email" type="email" required autocomplete="email"></label>
-<label>Vehicle (year, make, model)<input name="vehicle" required></label>
+<div class="row">
+<label>Year<select id="year" name="year" required><option value="">Select year</option></select></label>
+<label>Make<select id="make" name="make" required disabled><option value="">Select make</option></select></label>
+<label>Model<select id="model" name="model" required disabled><option value="">Select model</option></select></label>
+</div>
+<label id="other-wrap" hidden>Not listed? Tell us the vehicle<input id="other" name="vehicle_other"></label>
 <label>Service needed<select name="service"><option>Oil change</option><option>Brakes</option><option>Diagnostics</option><option>Suspension</option><option>Electrical</option><option>Inspection</option><option>Other</option></select></label>
+<label>Preferred date<input name="date" type="date"></label>
 <label>What’s going on?<textarea name="details" rows="4"></textarea></label>
 <button class="btn" type="submit">Send request</button>
 <p class="note">Requests are not confirmed until you hear back.</p></form>
-</div></main>
-<footer><div class="wrap">Inspired Auto · Zeeland, Michigan · <a href="tel:+16168486303">(616) 848-6303</a> · <a href="mailto:raiders7126@gmail.com">Email</a></div></footer>
-</body></html>
+<script>
+const $=id=>document.getElementById(id),y=$('year'),m=$('make'),mo=$('model'),ow=$('other-wrap'),ot=$('other');
+const makes=['Acura','Audi','BMW','Buick','Cadillac','Chevrolet','Chrysler','Dodge','Ford','GMC','Honda','Hyundai','Infiniti','Jeep','Kia','Lexus','Lincoln','Mazda','Mercedes-Benz','Mini','Mitsubishi','Nissan','Pontiac','Ram','Subaru','Toyota','Volkswagen','Volvo'];
+const add=(s,v,t)=>s.add(new Option(t||v,v));
+for(let i=new Date().getFullYear()+1;i>=1960;i--)add(y,i);
+makes.concat('Other').forEach(v=>add(m,v));
+function manual(){ow.hidden=false;ot.required=true}
+function auto(){ow.hidden=true;ot.required=false;ot.value=''}
+function resetModel(){mo.length=1;mo.disabled=true;auto()}
+y.onchange=()=>{m.disabled=!y.value;m.value='';resetModel()};
+m.onchange=async()=>{
+  resetModel();if(!m.value||!y.value)return;
+  if(m.value==='Other'){add(mo,'Other','Not listed');mo.value='Other';mo.disabled=false;manual();return}
+  mo.options[0].text='Loading…';
+  try{
+    const r=await fetch('https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/'+encodeURIComponent(m.value)+'/modelyear/'+y.value+'?forma
