@@ -14,7 +14,7 @@
 </nav></div></header>
 <main><div class="wrap">
 <h1>Book a visit</h1><p class="lede">Send a request and I’ll confirm a time by phone or email.</p>
-<form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+<form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" novalidate>
 <label>Name<input id="cname" name="name" required autocomplete="name" maxlength="60"></label>
 <label>Phone (digits only, include area code)<input id="phone" name="phone" type="tel" required inputmode="numeric" pattern="[0-9]{9,15}" maxlength="15" autocomplete="tel"></label>
 <label>Email<input name="email" type="email" required autocomplete="email"></label>
@@ -54,6 +54,19 @@ mo.onchange=()=>mo.value==='Other'?manual():auto();
 const nm=$('cname'),ph=$('phone');
 nm.oninput=()=>{nm.value=nm.value.replace(/[^\p{L}\p{M}' .\-]/gu,'');nm.setCustomValidity(nm.value.trim()?'':'Please enter your name')};
 ph.oninput=()=>{ph.value=ph.value.replace(/\D/g,'');ph.setCustomValidity(ph.value.length&&ph.value.length<9?'Enter at least 9 digits, including the area code':'')};
+const form=document.querySelector('form');
+function clearErr(el){const l=el.closest('label');if(!l)return;l.classList.remove('err');el.removeAttribute('aria-invalid');const x=l.querySelector('.msg');if(x)x.remove()}
+function showErr(el){
+  clearErr(el);const l=el.closest('label');l.classList.add('err');el.setAttribute('aria-invalid','true');
+  const t=el.validity.valueMissing?'This field is required':el.validity.typeMismatch?'Enter a valid email address':el.validationMessage;
+  const x=document.createElement('span');x.className='msg';x.setAttribute('role','alert');x.textContent=t;l.appendChild(x);
+}
+form.addEventListener('submit',e=>{
+  let first=null;
+  [...form.elements].forEach(el=>{if(el.willValidate&&!el.checkValidity()){showErr(el);first=first||el}});
+  if(first){e.preventDefault();first.focus()}
+});
+['input','change'].forEach(ev=>form.addEventListener(ev,e=>{if(e.target.checkValidity())clearErr(e.target)}));
 </script>
 </div></main>
 <footer><div class="wrap">Inspired Auto · Zeeland, Michigan · <a href="tel:+16168486303">(616) 848-6303</a> · <a href="mailto:raiders7126@gmail.com">Email</a></div></footer>
