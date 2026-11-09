@@ -27,6 +27,7 @@
 <label>Service needed<select name="service" required><option value="">Select service</option><option>Oil change</option><option>Brakes</option><option>Diagnostics</option><option>Suspension</option><option>Electrical</option><option>Inspection</option><option>Other</option></select></label>
 <label>What’s going on?<textarea name="details" rows="4"></textarea></label>
 <button class="btn" type="submit">Send request</button>
+<p class="note err-note" id="formerr" role="alert" hidden>Sorry, something went wrong and your request didn’t send. Please call or email us instead.</p>
 <p class="note">Requests are not confirmed until you hear back.</p></form>
 <script>
 const $=id=>document.getElementById(id),y=$('year'),m=$('make'),mo=$('model'),ow=$('other-wrap'),ot=$('other');
@@ -64,9 +65,13 @@ function showErr(el){
 form.addEventListener('submit',e=>{
   let first=null;
   [...form.elements].forEach(el=>{if(el.willValidate&&!el.checkValidity()){showErr(el);first=first||el}});
-  if(first){e.preventDefault();first.focus()}
+  e.preventDefault();
+  if(first){first.focus();return}
+  const b=form.querySelector('button'),er=$('formerr');er.hidden=true;b.disabled=true;b.textContent='Sending…';
+  fetch(form.action,{method:'POST',body:new FormData(form),headers:{Accept:'application/json'}})
+    .then(r=>{if(!r.ok)throw 0;location.href='thanks.html'})
+    .catch(()=>{er.hidden=false;b.disabled=false;b.textContent='Send request'});
 });
-['input','change'].forEach(ev=>form.addEventListener(ev,e=>{if(e.target.checkValidity())clearErr(e.target)}));
 </script>
 </div></main>
 <footer><div class="wrap">Inspired Auto · Zeeland, Michigan · <a href="tel:+16168486303">(616) 848-6303</a> · <a href="mailto:raiders7126@gmail.com">Email</a></div></footer>
