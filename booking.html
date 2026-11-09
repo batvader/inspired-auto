@@ -15,8 +15,8 @@
 <main><div class="wrap">
 <h1>Book a visit</h1><p class="lede">Send a request and I’ll confirm a time by phone or email.</p>
 <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-<label>Name<input name="name" required autocomplete="name"></label>
-<label>Phone<input name="phone" type="tel" required autocomplete="tel"></label>
+<label>Name<input id="cname" name="name" required autocomplete="name" maxlength="60"></label>
+<label>Phone (digits only, include area code)<input id="phone" name="phone" type="tel" required inputmode="numeric" pattern="[0-9]{9,15}" maxlength="15" autocomplete="tel"></label>
 <label>Email<input name="email" type="email" required autocomplete="email"></label>
 <div class="row">
 <label>Year<select id="year" name="year" required><option value="">Select year</option></select></label>
@@ -24,8 +24,7 @@
 <label>Model<select id="model" name="model" required disabled><option value="">Select model</option></select></label>
 </div>
 <label id="other-wrap" hidden>Not listed? Tell us the vehicle<input id="other" name="vehicle_other"></label>
-<label>Service needed<select name="service"><option>Oil change</option><option>Brakes</option><option>Diagnostics</option><option>Suspension</option><option>Electrical</option><option>Inspection</option><option>Other</option></select></label>
-<label>Preferred date<input name="date" type="date"></label>
+<label>Service needed<select name="service" required><option value="">Select service</option><option>Oil change</option><option>Brakes</option><option>Diagnostics</option><option>Suspension</option><option>Electrical</option><option>Inspection</option><option>Other</option></select></label>
 <label>What’s going on?<textarea name="details" rows="4"></textarea></label>
 <button class="btn" type="submit">Send request</button>
 <p class="note">Requests are not confirmed until you hear back.</p></form>
@@ -52,6 +51,9 @@ m.onchange=async()=>{
   mo.options[0].text='Select model';mo.disabled=false;
 };
 mo.onchange=()=>mo.value==='Other'?manual():auto();
+const nm=$('cname'),ph=$('phone');
+nm.oninput=()=>{nm.value=nm.value.replace(/[^\p{L}\p{M}' .\-]/gu,'');nm.setCustomValidity(nm.value.trim()?'':'Please enter your name')};
+ph.oninput=()=>{ph.value=ph.value.replace(/\D/g,'');ph.setCustomValidity(ph.value.length&&ph.value.length<9?'Enter at least 9 digits, including the area code':'')};
 </script>
 </div></main>
 <footer><div class="wrap">Inspired Auto · Zeeland, Michigan · <a href="tel:+16168486303">(616) 848-6303</a> · <a href="mailto:raiders7126@gmail.com">Email</a></div></footer>
