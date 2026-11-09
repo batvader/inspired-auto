@@ -42,3 +42,4 @@ footer{border-top:3px solid var(--line);padding:24px 0;color:var(--mute);font-si
 label.err{color:var(--red)}
 .err input,.err select,.err textarea{border-color:var(--red);box-shadow:0 0 0 1px var(--red);background:color-mix(in srgb,var(--red) 8%,var(--card))}
 .msg{font-weight:400;font-size:.9rem}
+.err-note{color:var(--red);font-weight:600}
