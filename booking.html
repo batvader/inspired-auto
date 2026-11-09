@@ -44,4 +44,15 @@ m.onchange=async()=>{
   if(m.value==='Other'){add(mo,'Other','Not listed');mo.value='Other';mo.disabled=false;manual();return}
   mo.options[0].text='Loading…';
   try{
-    const r=await fetch('https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/'+encodeURIComponent(m.value)+'/modelyear/'+y.value+'?forma
+    const r=await fetch('https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/'+encodeURIComponent(m.value)+'/modelyear/'+y.value+'?format=json');
+    const names=[...new Set((await r.json()).Results.map(x=>x.Model_Name))].sort();
+    if(!names.length)throw 0;
+    names.forEach(n=>add(mo,n));add(mo,'Other','Other / not listed');
+  }catch(e){add(mo,'Other','Not listed');mo.value='Other';manual()}
+  mo.options[0].text='Select model';mo.disabled=false;
+};
+mo.onchange=()=>mo.value==='Other'?manual():auto();
+</script>
+</div></main>
+<footer><div class="wrap">Inspired Auto · Zeeland, Michigan · <a href="tel:+1616848-6303">(616) 848-6303</a> · <a href="raiders7126@gmail.com">Email</a></div></footer>
+</body></html>
