@@ -66,3 +66,10 @@ a.item h3::after{content:" →";color:var(--accent)}
 .js .rv{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
 .js .rv.in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){.js .rv{opacity:1;transform:none}}
+:root{--bg:#0a0c10;--card:#12161c;--field:#0d1015;--ink:#eef1f5;--mute:#9aa6b4;--line:#232a33;--line2:#343d49;--accent:#4a94ff;--accent2:#7db0ff;--on:#0a0c10;--rgb:74,148,255;--red:#ff5c5c}
+body{background:radial-gradient(900px 420px at 85% -8%,rgba(var(--rgb),.12),transparent 70%),var(--bg);background-repeat:no-repeat}
+header{background:rgba(10,12,16,.85)}
+::selection{background:var(--accent);color:var(--on)}
+.btn,.btn:hover{color:var(--on)}
+input:focus,select:focus,textarea:focus{box-shadow:0 0 0 3px rgba(var(--rgb),.3)}
+.cta{background:linear-gradient(135deg,var(--card),#171d26)}
