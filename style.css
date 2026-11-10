@@ -73,3 +73,17 @@ header{background:rgba(10,12,16,.85)}
 .btn,.btn:hover{color:var(--on)}
 input:focus,select:focus,textarea:focus{box-shadow:0 0 0 3px rgba(var(--rgb),.3)}
 .cta{background:linear-gradient(135deg,var(--card),#171d26)}
+.wrap{max-width:1320px;padding:0 clamp(20px,5vw,64px)}
+main{padding:72px 0 88px}
+h1{font-size:clamp(2.8rem,7vw,6.2rem)}
+.hero{grid-template-columns:1.3fr 1fr;gap:clamp(40px,6vw,88px)}
+.hero::before{inset:-72px -64px}
+.lede{max-width:40ch}
+section{margin-top:88px}
+@media(min-width:1500px){body{font-size:19px}}
+@media(min-width:900px){
+form{max-width:900px;grid-template-columns:1fr 1fr}
+form>*{grid-column:1/-1}
+form>label:nth-of-type(-n+2){grid-column:auto}
+}
+@media(max-width:760px){.hero{grid-template-columns:1fr}main{padding:48px 0 64px}section{margin-top:64px}}
