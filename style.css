@@ -26,7 +26,7 @@ section>h2::after{content:"";display:block;width:44px;height:3px;border-radius:2
 header{border-bottom:1px solid var(--line);background:rgba(10,12,16,.85);backdrop-filter:blur(8px);position:sticky;top:0;z-index:5}
 header .wrap{display:flex;flex-wrap:wrap;gap:6px 28px;align-items:center;justify-content:space-between;padding-top:10px;padding-bottom:10px}
 .logo{display:inline-flex;align-items:center;gap:12px;font:700 1.8rem "Barlow Condensed",sans-serif;text-decoration:none;color:var(--ink);letter-spacing:.01em}
-.logo::before{content:"";width:56px;height:66px;background:url("logo-sm.png") center/contain no-repeat}
+.logo::before{content:"";width:62px;height:63px;background:url("logo-sm.png") center/contain no-repeat}
 .logo b{color:var(--accent)}
 nav{display:flex;flex-wrap:wrap;gap:4px 24px}
 nav a{color:var(--mute);text-decoration:none;font-weight:600;padding:4px 0;border-bottom:2px solid transparent;transition:color .15s,border-color .15s}
