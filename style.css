@@ -124,7 +124,12 @@ nav a{font-size:.8rem}
 .lb-p{left:14px;top:50%;margin-top:-22px}
 .lb-n{right:14px;top:50%;margin-top:-22px}
 /*Privacy-policy */
-.legal-page {max-width: 900px;margin: 0 auto;padding: 40px 24px 60px;}
-.legal-header {text-align: center;margin-bottom: 35px;}
-.legal-header h1 {text-align: center;}
-.legal-content {text-align: left;max-width: 800px;margin: 0 auto;}
+/* Legal Pages */
+.legal-page {max-width: 1000px;margin: 0 auto;padding: 0 24px;}
+.legal-header {text-align: center;margin-bottom: 40px;}
+.legal-header p {color: var(--mute);}
+.legal-content {max-width: 800px;margin: 0 auto;}
+.legal-content h2 {margin-top: 36px;}
+.legal-content p,.legal-content li {color: var(--mute);}
+.legal-content ul {padding-left: 28px;}
+@media(max-width:560px) {.legal-page {padding: 0 20px;}}
