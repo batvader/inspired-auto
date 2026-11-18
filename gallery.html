@@ -33,23 +33,61 @@
 <button type="button" class="lb-n" aria-label="Next photo">&rsaquo;</button>
 <p class="lb-c"></p>
 </dialog>
-<footer><div class="wrap">Inspired Auto · Zeeland, Michigan ·
-  <a href="tel:+16163292944">(616) 329-2944</a> ·
-  <a href="mailto:raiders7126@gmail.com">Email</a> .
-  <a href="privacy-policy.html">Privacy Policy</a> .
-  <a href="terms.html">Terms &amp; Conditions.</a> .
-  <a href="service-disclaimer.html">Service Disclaimer</a> .
-  <a href="warranty-policy.html">Warranty Policy</a> . 
-</div>
-const imgs=[...document.querySelectorAll('.gallery img')],lb=document.getElementById('lb'),big=lb.querySelector('img'),cap=lb.querySelector('.lb-c');
-let i=0;
-if(imgs.length)document.getElementById('empty').hidden=true;
-function show(n){i=(n+imgs.length)%imgs.length;big.src=imgs[i].src;big.alt=imgs[i].alt;cap.textContent=imgs[i].alt}
-imgs.forEach((im,n)=>im.closest('button').addEventListener('click',()=>{show(n);lb.showModal()}));
-lb.querySelector('.lb-x').onclick=()=>lb.close();
-lb.querySelector('.lb-p').onclick=()=>show(i-1);
-lb.querySelector('.lb-n').onclick=()=>show(i+1);
-lb.addEventListener('click',e=>{if(e.target===lb)lb.close()});
-document.addEventListener('keydown',e=>{if(!lb.open)return;if(e.key==='ArrowLeft')show(i-1);if(e.key==='ArrowRight')show(i+1)});
+
+<footer>
+    <div class="wrap">
+        Inspired Auto · Zeeland, Michigan ·
+        <a href="tel:+16163292944">(616) 329-2944</a> ·
+        <a href="mailto:raiders7126@gmail.com">Email</a> ·
+        <a href="privacy-policy.html">Privacy Policy</a> ·
+        <a href="terms.html">Terms &amp; Conditions</a> ·
+        <a href="service-disclaimer.html">Service Disclaimer</a> ·
+        <a href="warranty-policy.html">Warranty Policy</a> ·
+        <a href="accessibility.html">Accessibility</a>
+    </div>
+</footer>
+
+<script>
+const imgs = [...document.querySelectorAll('.gallery img')];
+const lb = document.getElementById('lb');
+const big = lb.querySelector('img');
+const cap = lb.querySelector('.lb-c');
+
+let i = 0;
+
+if (imgs.length) {
+    document.getElementById('empty').hidden = true;
+}
+
+function show(n) {
+    i = (n + imgs.length) % imgs.length;
+    big.src = imgs[i].src;
+    big.alt = imgs[i].alt;
+    cap.textContent = imgs[i].alt;
+}
+
+imgs.forEach((im, n) => {
+    im.closest('button').addEventListener('click', () => {
+        show(n);
+        lb.showModal();
+    });
+});
+
+lb.querySelector('.lb-x').onclick = () => lb.close();
+lb.querySelector('.lb-p').onclick = () => show(i - 1);
+lb.querySelector('.lb-n').onclick = () => show(i + 1);
+
+lb.addEventListener('click', e => {
+    if (e.target === lb) lb.close();
+});
+
+document.addEventListener('keydown', e => {
+    if (!lb.open) return;
+
+    if (e.key === 'ArrowLeft') show(i - 1);
+    if (e.key === 'ArrowRight') show(i + 1);
+});
 </script>
-</body></html>
+
+</body>
+</html>
