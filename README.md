@@ -2,11 +2,6 @@
 
 Static site: plain HTML and one CSS file. No build step.
 
-## Before launch
-- Replace `(616) 000-0000` and `hello@inspired-auto.com` in every page footer and in contact.html.
-- Booking form: create a free form at formspree.io and replace `YOUR_FORM_ID` in booking.html.
-- Fill in the bracketed text in about.html and contact.html (story, hours).
-
 ## Deploy (GitHub Pages)
 1. Create a repo, push these files to the root of `main`.
 2. Repo Settings > Pages > Deploy from branch > `main` / root. The `CNAME` file sets the domain.
