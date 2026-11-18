@@ -97,7 +97,6 @@ form>label:nth-of-type(-n+2){grid-column:auto}
 @media(max-width:760px){main{padding:48px 0 64px}section{margin-top:64px}}
 @media(max-width:560px){.row{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}.js .rv{opacity:1;transform:none}}
-
 @media(max-width:560px){
 .logo{font-size:1.5rem;gap:10px}
 .logo::before{width:36px;height:43px}
@@ -124,3 +123,8 @@ nav a{font-size:.8rem}
 .lb-x{top:16px;right:16px}
 .lb-p{left:14px;top:50%;margin-top:-22px}
 .lb-n{right:14px;top:50%;margin-top:-22px}
+/*Privacy-policy */
+.legal-page {max-width: 900px;margin: 0 auto;padding: 40px 24px 60px;}
+.legal-header {text-align: center;margin-bottom: 35px;}
+.legal-header h1 {text-align: center;}
+.legal-content {text-align: left;max-width: 800px;margin: 0 auto;}
