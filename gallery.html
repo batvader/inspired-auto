@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gallery | Inspired Auto</title><meta name="description" content="Photos of custom body work, lift kits, and lowering kits by Inspired Auto in Zeeland, MI.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600&family=Barlow+Condensed:wght@700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="style.css"></head><body>
+<header><div class="wrap"><a class="logo" href="index.html">Inspired <b>Auto</b></a>
+<nav aria-label="Main">
+<a href="index.html">Home</a>
+<a href="services.html">Services</a>
+<a href="gallery.html" aria-current="page">Gallery</a>
+<a href="booking.html">Booking</a>
+<a href="about.html">About us</a>
+<a href="contact.html">Contact</a>
+</nav></div></header>
+<main><div class="wrap">
+<h1>Gallery</h1><p class="lede">A look at recent custom body work, lift kits, and lowering kits.</p>
+<p class="note" id="empty">Photos coming soon.</p>
+<div class="gallery">
+<!-- ADD PHOTOS BELOW. Copy one block per photo and change the file name and description:
+<button type="button"><img src="images/your-photo.jpg" alt="Describe the photo" width="1200" height="900" loading="lazy"></button>
+-->
+
+</div>
+<section><div class="cta"><h2>Want yours to look this good?</h2><a class="btn" href="booking.html">Book a visit</a></div></section>
+</div></main>
+<dialog class="lb" id="lb" aria-label="Photo viewer">
+<button type="button" class="lb-x" aria-label="Close">&times;</button>
+<button type="button" class="lb-p" aria-label="Previous photo">&lsaquo;</button>
+<img alt="">
+<button type="button" class="lb-n" aria-label="Next photo">&rsaquo;</button>
+<p class="lb-c"></p>
+</dialog>
+<footer><div class="wrap">Inspired Auto · Zeeland, Michigan · <a href="tel:+16168486303">(616) 848-6303</a> · <a href="mailto:raiders7126@gmail.com">Email</a></div></footer>
+<script>
+const imgs=[...document.querySelectorAll('.gallery img')],lb=document.getElementById('lb'),big=lb.querySelector('img'),cap=lb.querySelector('.lb-c');
+let i=0;
+if(imgs.length)document.getElementById('empty').hidden=true;
+function show(n){i=(n+imgs.length)%imgs.length;big.src=imgs[i].src;big.alt=imgs[i].alt;cap.textContent=imgs[i].alt}
+imgs.forEach((im,n)=>im.closest('button').addEventListener('click',()=>{show(n);lb.showModal()}));
+lb.querySelector('.lb-x').onclick=()=>lb.close();
+lb.querySelector('.lb-p').onclick=()=>show(i-1);
+lb.querySelector('.lb-n').onclick=()=>show(i+1);
+lb.addEventListener('click',e=>{if(e.target===lb)lb.close()});
+document.addEventListener('keydown',e=>{if(!lb.open)return;if(e.key==='ArrowLeft')show(i-1);if(e.key==='ArrowRight')show(i+1)});
+</script>
+</body></html>
